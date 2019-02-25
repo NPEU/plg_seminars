@@ -9,6 +9,8 @@
 
 defined('_JEXEC') or die;
 
+use setasign\Fpdi\Tcpdf\Fpdi;
+
 /**
  * Generate PDF's from seminars data when CSV is uploaded.
  */
@@ -89,6 +91,82 @@ class plgCSVUploadsSeminars extends JPlugin
         }
 
         $this->data = $data;
+        
+        
+        // Write PDF versions:
+        $seminars_dir = '../downloads/files/npeu/seminars/';
+        $template     = $seminars_dir . 'Seminars Template.pdf';
+        //require_once('../libs/tcpdf/tcpdf.php');
+        //require_once('../libs/fpdi/fpdi.php');
+        foreach ($data['terms'] as $term => $seminars) {
+            //$pdf = new FPDI();
+            $pdf = new Fpdi();
+
+            $pdf->SetMargins(15, 50, 15);
+            $pdf->setFontSubsetting(true);
+            $pdf->setPrintHeader(false);
+            $pdf->setPrintFooter(false);
+            
+           
+            $pdf->SetTextColor(0, 0, 0);
+        
+            $pdf->setSourceFile($seminars_dir . "Seminars Template.pdf");
+            $tpl_idx = $pdf->importPage(1);
+            
+            $pdf->addPage();
+            $pdf->useTemplate($tpl_idx, 0, 0);
+            
+            #$pdf->SetFont('arialbd', '', 20);
+            $pdf->SetFont('calibri', 'B', 24);
+            #$pdf->Write(0, "NPEU Seminar Series\n" . $term, '', 0, 'L', true, 0, false, false, 0);
+            $h1 = '<h1 style="text-align: center;">NPEU Seminar Series<br />' . $term . '<br /></h1>';
+            $pdf->writeHTMLCell(0, 0, '', '', $h1, 0, 1, 0, true, '', true);
+            
+            $pdf->SetFont('arial', '', 11);
+            
+            $pdf->setFontSubsetting(false);
+            
+            $dates  = '<table>';
+            $dates .= '<tr><td colspan="2"><hr /></td></tr>';
+            
+            foreach ($seminars as $seminar) {
+                #echo '<pre>'; var_dump($seminar['location']); echo '</pre>';
+                if ($seminar['cancelled'] == 'Y') {
+                    $dates .= '<tr><td colspan="2" style="text-align: center"><i><b>Please note:</b> the following seminar has been <b>CANCELLED</b>:</i><br /></td></tr>';
+                }
+                
+                $dates .= '<tr' . ($seminar['cancelled'] == 'Y' ? ' style="color: #777"' : '') .'>';
+                
+                $dates .= '<td width="20%"><b style="font-family: arialbd; font-size: 13pt;">' . date('F', strtotime($seminar['date'])) . '</b><br />' . date('D j\<\s\u\p\>S\<\/\s\u\p\>', strtotime($seminar['date'])) . '<br /><br />' . $seminar['start'] .' – ' . $seminar['end'] . '</td>';
+                $dates .= '<td width="80%"><b style="font-family: arialbd; font-size: 13pt;">' . $seminar['speaker'] . '</b><br /><i style="font-size: 10pt; font-family: ariali;">' . $seminar['speaker_role'] . '</i><br />' . $seminar['title'];
+                //$dates .= '<td width="80%"><b style="font-family: arialbd; font-size: 13pt;">' . $seminar['speaker'] . '</b><br /><span style="font-size: 9pt;">' . $seminar['speaker_role'] . '</span><br />' . $seminar['title'];
+                if ($seminar['location'] != 'Richard Doll Lecture Theatre') {
+                    $dates .= '<br /><b style="font-family: arialbd;">' . $seminar['location'] . '</b>';
+                }
+                if (!empty($seminar['notes'])) {
+                    $dates .= '<br />' . $seminar['notes'];
+                }
+                $dates .= '</td>';
+                $dates .= '</tr>';
+                $dates .= '<tr><td colspan="2"><br /><hr /></td></tr>';
+                
+            }
+            
+            $dates .= '</table>';
+            
+            #echo '<pre>'; var_dump($dates); echo '</pre>';
+            
+            
+            #$pdf->SetXY(50);
+            
+            #$pdf->writeHTML($dates, true, false, false, false, '');
+            $pdf->writeHTMLCell(0, 0, '', '', $dates, 0, 1, 0, true, '', true);
+            
+            $pdf->Output($seminars_dir . 'NPEU Seminars - ' . $term . ' ' . $last_mod . '.pdf', 'F');
+
+        }
+        
+        
         return true;
     }
     

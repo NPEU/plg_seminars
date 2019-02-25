@@ -1,0 +1,10 @@
+{
+    "name": "npeu/plg_seminars",
+    "type": "project",
+    "version": "0.0.1",
+    "description": "This file lists all the PHP packages required for the project.",
+    "require": {
+        "setasign/fpdi-tcpdf": "^2.0",
+        "setasign/fpdi": "^2.0"
+    }
+}
