@@ -23,6 +23,7 @@
         <filename plugin="seminars">seminars.php</filename>
         <filename>index.html</filename>
         <folder>language</folder>
+        <folder>vendor</folder>
     </files>
 
 </extension>
