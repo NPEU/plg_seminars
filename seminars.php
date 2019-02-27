@@ -52,11 +52,11 @@ class plgCSVUploadsSeminars extends JPlugin
             'lastmod' => $last_mod
         );
         foreach ($csv as  $row) {
-            $term    = $row['Term'];
+            $term = $row['Term'];
 
             if (empty($term)) {
                 continue;
-           }
+            }
 
             $date    = strtotime($row['Date']);
             $seminar = array(
@@ -108,11 +108,14 @@ class plgCSVUploadsSeminars extends JPlugin
      *
      * @return  boolean  True on success
      */
-    public function onBeforeSaveJSON($json, $filename)
+    public function onBeforeSaveJSON(&$json, $filename)
     {
         if ($filename != 'npeu-seminar-dates.json') {
             return false;
         }
+
+        // Note the $json is passed as a reference, so we can just update it here:
+        $json = json_encode($this->data);
 
         $app = JFactory::getApplication();
 
