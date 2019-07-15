@@ -1,10 +1,17 @@
 {
     "name": "npeu/plg_seminars",
-    "type": "project",
-    "version": "0.0.1",
     "description": "This file lists all the PHP packages required for the project.",
+    "type": "project",
+    "version": "1.0.0",
+    "license": "MIT",
     "require": {
         "setasign/fpdi-tcpdf": "^2.0",
         "setasign/fpdi": "^2.0"
-    }
+    },
+    "authors": [
+        {
+            "name": "Andy Kirk",
+            "email": "andy.kirk@npeu.ox.ac.uk"
+        }
+    ]
 }
