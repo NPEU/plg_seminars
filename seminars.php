@@ -120,7 +120,7 @@ class plgCSVUploadsSeminars extends JPlugin
         $app = JFactory::getApplication();
 
         // Write PDF versions:
-        $seminars_dir = JPATH_SITE . '/downloads/files/npeu/seminars/';
+        $seminars_dir = JPATH_SITE . '/assets/downloads/npeu/seminars/';
         $template     = $seminars_dir . 'Seminars Template.pdf';
 
         $last_mod = date('Y-m-d-Hm');
