@@ -182,6 +182,9 @@ class plgCSVUploadsSeminars extends JPlugin
             $pdf_filename = 'NPEU Seminars - ' . $term . ' ' . $last_mod . '.pdf';
             $pdf->Output($seminars_dir . $pdf_filename, 'F');
 
+            // Create unlock file:
+            file_put_contents($seminars_dir . $pdf_filename . '.unlock', time());
+
             $app->enqueueMessage(sprintf(JText::_('PLG_SEMINARS_MESSAGE_JSON_SUCCESS'), $pdf_filename));
 
         }
