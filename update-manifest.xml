@@ -51,4 +51,21 @@
             <tag>stable</tag>
         </tags>
     </update>
+    <update>
+        <name>NPEU: plg_seminars</name>
+        <description>Joomla! plg_seminars plugin</description>
+        <element>seminars</element>
+        <type>plugin</type>
+        <folder>csvuploads</folder>
+        <version>1.0.3</version>
+        <client>site</client>
+        <infourl title="NPEU: plg_seminars">https://github.com/NPEU/plg_seminars/releases/tag/v1.0.3</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/NPEU/plg_seminars/archive/v1.0.3.zip</downloadurl>
+        </downloads>
+        <targetplatform name="joomla" />
+        <tags>
+            <tag>stable</tag>
+        </tags>
+    </update>
 </updates>
