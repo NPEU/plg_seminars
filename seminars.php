@@ -57,8 +57,10 @@ class plgCSVUploadsSeminars extends JPlugin
             if (empty($term)) {
                 continue;
             }
-
             $date    = strtotime($row['Date']);
+
+            $term = $term . ' ' . date('Y', $date);
+
             $seminar = array(
                 'date'         => date('c', $date),
                 'start'        => $row['Time Start'],
@@ -69,7 +71,7 @@ class plgCSVUploadsSeminars extends JPlugin
                 'location'     => $row['Location'],
                 'notes'        => $row['Notes'],
                 'cancelled'    => $row['Cancelled'],
-                'term'         => $term,
+                'term'         => $term . ' ' . date('c', $date),
                 'lastmod'      => $last_mod
             );
 
